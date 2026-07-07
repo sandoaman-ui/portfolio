@@ -1,26 +1,68 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist);
+  --font-display: var(--font-bebas);
+  --color-gold: #c9a97a;
+  --color-gold-dim: #8a6f47;
+  --color-surface: #0a0a0a;
+  --color-border: #1a1a1a;
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  cursor: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #000;
+  color: #fff;
+  overflow-x: hidden;
+  font-family: var(--font-geist, "Inter", sans-serif);
+}
+
+/* Animated grain overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: 9990;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.35s steps(1) infinite;
+}
+
+@keyframes grain {
+  0%   { transform: translate(0,     0) }
+  14%  { transform: translate(-5%,  -10%) }
+  28%  { transform: translate(-15%,  5%) }
+  42%  { transform: translate(7%,  -25%) }
+  57%  { transform: translate(-5%,  25%) }
+  71%  { transform: translate(-15%, 10%) }
+  85%  { transform: translate(15%,   0%) }
+  100% { transform: translate(3%,   15%) }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+/* Selection */
+::selection {
+  background: #c9a97a33;
+  color: #c9a97a;
 }
