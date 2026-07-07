@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function CategoryNav({ category }: { category: string }) {
   const [scrolled, setScrolled] = useState(false);
@@ -34,9 +35,15 @@ export default function CategoryNav({ category }: { category: string }) {
         Productions
       </a>
 
-      <span className="font-display text-base tracking-[0.3em] text-white/60">
-        {category.toUpperCase()}
-      </span>
+      <a href="/" data-cursor="hover">
+        <Image
+          src="/logo-white.png"
+          alt="Home"
+          width={36}
+          height={36}
+          className="object-contain opacity-60 hover:opacity-100 transition-opacity duration-300"
+        />
+      </a>
 
       <a
         href="/#contact"

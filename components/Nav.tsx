@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import Image from "next/image";
 
 const navLinks = [
   { label: "Productions", href: "#productions" },
@@ -33,12 +33,19 @@ export default function Nav() {
       {/* Logo */}
       <motion.a
         href="#"
-        className="font-display text-2xl tracking-widest text-white"
+        className="block"
         data-cursor="hover"
-        whileHover={{ letterSpacing: "0.3em" }}
+        whileHover={{ scale: 1.05 }}
         transition={{ duration: 0.3 }}
       >
-        AS
+        <Image
+          src="/logo-white.png"
+          alt="Amanveer Singh Sando"
+          width={44}
+          height={44}
+          className="object-contain"
+          priority
+        />
       </motion.a>
 
       {/* Links */}

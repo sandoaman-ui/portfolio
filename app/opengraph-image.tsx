@@ -1,11 +1,17 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "fs/promises";
+import path from "path";
 
-export const runtime = "edge";
 export const alt = "Amanveer Singh Sando — Photography & Cinematography";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OGImage() {
+export default async function OGImage() {
+  const logoBuffer = await readFile(
+    path.join(process.cwd(), "public/logo-white.png")
+  );
+  const logoBase64 = `data:image/png;base64,${logoBuffer.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -16,11 +22,11 @@ export default function OGImage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "#000",
-          fontFamily: "serif",
+          background: "#0a0a0a",
+          fontFamily: "sans-serif",
         }}
       >
-        {/* Top gold rule */}
+        {/* Top rule */}
         <div
           style={{
             position: "absolute",
@@ -32,19 +38,15 @@ export default function OGImage() {
           }}
         />
 
-        {/* AS monogram */}
-        <div
-          style={{
-            fontSize: 160,
-            fontWeight: 700,
-            color: "#fff",
-            letterSpacing: "-0.02em",
-            lineHeight: 1,
-            marginBottom: 32,
-          }}
-        >
-          AS
-        </div>
+        {/* Logo */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={logoBase64}
+          width={130}
+          height={130}
+          alt=""
+          style={{ objectFit: "contain", marginBottom: 32 }}
+        />
 
         {/* Gold divider */}
         <div
@@ -52,7 +54,7 @@ export default function OGImage() {
             width: 48,
             height: 1,
             background: "#c9a97a",
-            marginBottom: 32,
+            marginBottom: 28,
           }}
         />
 
@@ -60,9 +62,8 @@ export default function OGImage() {
         <div
           style={{
             fontSize: 22,
-            color: "rgba(255,255,255,0.5)",
+            color: "rgba(255,255,255,0.55)",
             letterSpacing: "0.35em",
-            textTransform: "uppercase",
             marginBottom: 12,
           }}
         >
@@ -73,15 +74,14 @@ export default function OGImage() {
         <div
           style={{
             fontSize: 13,
-            color: "rgba(255,255,255,0.25)",
+            color: "rgba(255,255,255,0.22)",
             letterSpacing: "0.45em",
-            textTransform: "uppercase",
           }}
         >
           Photography&nbsp;&nbsp;·&nbsp;&nbsp;Cinematography
         </div>
 
-        {/* Bottom gold rule */}
+        {/* Bottom rule */}
         <div
           style={{
             position: "absolute",
