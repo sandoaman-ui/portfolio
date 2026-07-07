@@ -15,11 +15,6 @@ export default function Hero() {
       ref={ref}
       className="relative h-[100dvh] flex flex-col items-center justify-center bg-black overflow-hidden"
     >
-      {/* Background accent lines */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-px h-full bg-gradient-to-b from-transparent via-white/5 to-transparent" />
-      </div>
-
       <motion.div
         className="relative z-10 flex flex-col items-center text-center px-6"
         style={{ y, opacity }}
