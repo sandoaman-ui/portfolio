@@ -48,37 +48,94 @@ const projects = [
   },
 ];
 
+const TICKER_TEXT = "SELECTED WORK · 2025—2026 · PHOTOGRAPHY · CINEMATOGRAPHY · ";
+
+function TickerStrip({ reverse = false }: { reverse?: boolean }) {
+  return (
+    <div className="overflow-hidden border-y border-white/[0.06] py-3 pointer-events-none select-none">
+      <motion.div
+        className="flex whitespace-nowrap text-[10px] tracking-[0.35em] uppercase text-white/25"
+        style={{ willChange: "transform" }}
+        animate={{ x: reverse ? ["-50%", "0%"] : ["0%", "-50%"] }}
+        transition={{ duration: 28, ease: "linear", repeat: Infinity }}
+      >
+        <span>{TICKER_TEXT.repeat(8)}</span>
+        <span>{TICKER_TEXT.repeat(8)}</span>
+      </motion.div>
+    </div>
+  );
+}
+
 export default function ProjectGrid() {
+  const heading = "PRODUCTIONS";
+
   return (
     <section id="productions" className="bg-black py-24 md:py-32">
-      <div className="max-w-screen-xl mx-auto px-6 md:px-12">
+      {/* Ticker strip */}
+      <TickerStrip />
+
+      <div className="max-w-screen-xl mx-auto px-6 md:px-12 mt-20 md:mt-24">
         {/* Section header */}
         <div className="flex items-end justify-between mb-16 md:mb-20">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <p className="text-[10px] tracking-[0.4em] uppercase text-gold mb-3">
+          <div>
+            <motion.p
+              className="text-[10px] tracking-[0.4em] uppercase text-gold mb-4"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            >
               Selected Work
-            </p>
-            <h2 className="font-display text-5xl md:text-7xl tracking-wider text-white">
-              PRODUCTIONS
-            </h2>
-          </motion.div>
+            </motion.p>
 
-          <motion.p
-            className="hidden md:block text-xs tracking-[0.15em] text-white/30 text-right max-w-[200px]"
+            {/* Letter-by-letter heading */}
+            <h2
+              className="font-display text-5xl md:text-7xl tracking-wider text-white"
+              aria-label={heading}
+            >
+              {heading.split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  className="inline-block overflow-hidden"
+                  initial={{ y: "110%", opacity: 0 }}
+                  whileInView={{ y: "0%", opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.65,
+                    delay: i * 0.04,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </h2>
+          </div>
+
+          <motion.div
+            className="hidden md:flex flex-col items-end gap-1"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
           >
-            Photography & Cinematography
-            <br />
-            2025 — 2026
-          </motion.p>
+            <p className="text-xs tracking-[0.15em] text-white/25 text-right">
+              Photography & Cinematography
+            </p>
+            <p className="text-xs tracking-[0.15em] text-white/25">2025 — 2026</p>
+            <div className="mt-3 flex items-center gap-1.5">
+              {projects.map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="w-1 h-1 rounded-full bg-gold/40"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.6 + i * 0.07, duration: 0.4 }}
+                />
+              ))}
+            </div>
+          </motion.div>
         </div>
 
         {/* Grid */}
@@ -87,6 +144,11 @@ export default function ProjectGrid() {
             <ProjectCard key={project.title} {...project} index={i} />
           ))}
         </div>
+      </div>
+
+      {/* Bottom ticker (reversed direction) */}
+      <div className="mt-24 md:mt-32">
+        <TickerStrip reverse />
       </div>
     </section>
   );
