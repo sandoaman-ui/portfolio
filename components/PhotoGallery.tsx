@@ -9,7 +9,7 @@ interface Props {
 }
 
 function thumb(src: string) {
-  return `/_next/image?url=${encodeURIComponent(src)}&w=1080&q=80`;
+  return `/_next/image?url=${encodeURIComponent(src)}&w=828&q=80`;
 }
 
 export default function PhotoGallery({ images, title }: Props) {

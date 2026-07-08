@@ -11,18 +11,10 @@ export default function FashionPage() {
   return (
     <>
       {fashion.slice(0, 4).map((src) => (
-        <link
-          key={src}
-          rel="preload"
-          as="image"
-          href={`/_next/image?url=${encodeURIComponent(src)}&w=1080&q=80`}
-        />
+        <link key={src} rel="preload" as="image"
+          href={`/_next/image?url=${encodeURIComponent(src)}&w=828&q=80`} />
       ))}
-      <GalleryPageLayout
-        title="Fashion"
-        description="Where Style Finds Structure"
-        images={fashion}
-      />
+      <GalleryPageLayout title="Fashion" description="Where Style Finds Structure" images={fashion} />
     </>
   );
 }

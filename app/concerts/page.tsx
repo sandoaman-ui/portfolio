@@ -11,18 +11,10 @@ export default function ConcertsPage() {
   return (
     <>
       {concerts.slice(0, 4).map((src) => (
-        <link
-          key={src}
-          rel="preload"
-          as="image"
-          href={`/_next/image?url=${encodeURIComponent(src)}&w=1080&q=80`}
-        />
+        <link key={src} rel="preload" as="image"
+          href={`/_next/image?url=${encodeURIComponent(src)}&w=828&q=80`} />
       ))}
-      <GalleryPageLayout
-        title="Concerts"
-        description="Live, Loud, Unfiltered"
-        images={concerts}
-      />
+      <GalleryPageLayout title="Concerts" description="Live, Loud, Unfiltered" images={concerts} />
     </>
   );
 }

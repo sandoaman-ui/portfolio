@@ -11,18 +11,10 @@ export default function SportsPage() {
   return (
     <>
       {sports.slice(0, 4).map((src) => (
-        <link
-          key={src}
-          rel="preload"
-          as="image"
-          href={`/_next/image?url=${encodeURIComponent(src)}&w=1080&q=80`}
-        />
+        <link key={src} rel="preload" as="image"
+          href={`/_next/image?url=${encodeURIComponent(src)}&w=828&q=80`} />
       ))}
-      <GalleryPageLayout
-        title="Sports"
-        description="The Art of Human Limits"
-        images={sports}
-      />
+      <GalleryPageLayout title="Sports" description="The Art of Human Limits" images={sports} />
     </>
   );
 }

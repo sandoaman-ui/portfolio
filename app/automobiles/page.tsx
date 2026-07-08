@@ -11,18 +11,10 @@ export default function AutomobilesPage() {
   return (
     <>
       {automobiles.slice(0, 4).map((src) => (
-        <link
-          key={src}
-          rel="preload"
-          as="image"
-          href={`/_next/image?url=${encodeURIComponent(src)}&w=1080&q=80`}
-        />
+        <link key={src} rel="preload" as="image"
+          href={`/_next/image?url=${encodeURIComponent(src)}&w=828&q=80`} />
       ))}
-      <GalleryPageLayout
-        title="Automobiles"
-        description="Where Machines Find Poetry"
-        images={automobiles}
-      />
+      <GalleryPageLayout title="Automobiles" description="Where Machines Find Poetry" images={automobiles} />
     </>
   );
 }
