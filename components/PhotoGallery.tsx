@@ -8,10 +8,8 @@ interface Props {
   title: string;
 }
 
-// Serve thumbnails through Next.js image optimizer (resize + WebP + edge cache)
-function thumb(src: string) {
-  return `/_next/image?url=${encodeURIComponent(src)}&w=828&q=75`;
-}
+// Use CDN URL directly — Adobe's CDN is globally cached, no cold-start penalty
+// vs routing through /_next/image which must cold-fetch + resize on first hit
 
 export default function PhotoGallery({ images, title }: Props) {
   const [selected, setSelected] = useState<number | null>(null);
@@ -59,16 +57,16 @@ export default function PhotoGallery({ images, title }: Props) {
             )}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={thumb(src)}
+              src={src}
               alt={`${title} ${i + 1}`}
               className={`w-full block group-hover:scale-[1.04] transition-transform duration-700 ease-out ${
                 loaded[i] ? "opacity-100" : "opacity-0 absolute inset-0 h-full object-cover"
               }`}
               style={{ transition: "opacity 0.4s ease, transform 0.7s ease" }}
-              loading={i < 6 ? "eager" : "lazy"}
+              loading={i < 8 ? "eager" : "lazy"}
               // @ts-expect-error fetchpriority is valid HTML but missing from React types
               fetchpriority={i < 4 ? "high" : i < 8 ? "auto" : "low"}
-              decoding={i < 4 ? "sync" : "async"}
+              decoding={i < 6 ? "sync" : "async"}
               onLoad={() => setLoaded((p) => ({ ...p, [i]: true }))}
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-400" />
