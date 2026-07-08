@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
+    minimumCacheTTL: 2592000, // 30 days — prevents cold re-fetch on every visit
   },
 };
 

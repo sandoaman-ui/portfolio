@@ -66,6 +66,9 @@ export default function PhotoGallery({ images, title }: Props) {
               }`}
               style={{ transition: "opacity 0.4s ease, transform 0.7s ease" }}
               loading={i < 6 ? "eager" : "lazy"}
+              // @ts-expect-error fetchpriority is valid HTML but missing from React types
+              fetchpriority={i < 4 ? "high" : i < 8 ? "auto" : "low"}
+              decoding={i < 4 ? "sync" : "async"}
               onLoad={() => setLoaded((p) => ({ ...p, [i]: true }))}
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-400" />

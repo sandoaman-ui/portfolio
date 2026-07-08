@@ -9,10 +9,20 @@ export const metadata: Metadata = {
 
 export default function ConcertsPage() {
   return (
-    <GalleryPageLayout
-      title="Concerts"
-      description="Live, Loud, Unfiltered"
-      images={concerts}
-    />
+    <>
+      {concerts.slice(0, 4).map((src) => (
+        <link
+          key={src}
+          rel="preload"
+          as="image"
+          href={`/_next/image?url=${encodeURIComponent(src)}&w=828&q=75`}
+        />
+      ))}
+      <GalleryPageLayout
+        title="Concerts"
+        description="Live, Loud, Unfiltered"
+        images={concerts}
+      />
+    </>
   );
 }

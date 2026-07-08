@@ -79,7 +79,7 @@ export default function ProjectCard({
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
           className="object-cover"
-          priority={index < 2}
+          priority={index < 4}
         />
       </motion.div>
 
