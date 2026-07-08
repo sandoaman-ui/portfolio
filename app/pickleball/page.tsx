@@ -12,7 +12,7 @@ export default function PickleballPage() {
     <>
       {pickleball.slice(0, 4).map((src) => (
         <link key={src} rel="preload" as="image"
-          href={`/_next/image?url=${encodeURIComponent(src)}&w=828&q=80`} />
+          href={`/_next/image?url=${encodeURIComponent(src)}&w=828&q=75`} />
       ))}
       <GalleryPageLayout title="Pickleball" images={pickleball} />
     </>
