@@ -8,12 +8,27 @@ interface Props {
   title: string;
 }
 
-// Use CDN URL directly — Adobe's CDN is globally cached, no cold-start penalty
-// vs routing through /_next/image which must cold-fetch + resize on first hit
+function thumb(src: string) {
+  return `/_next/image?url=${encodeURIComponent(src)}&w=1080&q=80`;
+}
 
 export default function PhotoGallery({ images, title }: Props) {
   const [selected, setSelected] = useState<number | null>(null);
   const [loaded, setLoaded] = useState<Record<number, boolean>>({});
+
+  // Stagger-warm all images through /_next/image so Vercel caches them
+  // before the user scrolls to them. Starts 1.5s after page load.
+  useEffect(() => {
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    images.forEach((src, i) => {
+      const t = setTimeout(() => {
+        const img = new window.Image();
+        img.src = thumb(src);
+      }, 1500 + i * 150);
+      timers.push(t);
+    });
+    return () => timers.forEach(clearTimeout);
+  }, [images]);
 
   const close = useCallback(() => setSelected(null), []);
   const prev = useCallback(
@@ -51,13 +66,23 @@ export default function PhotoGallery({ images, title }: Props) {
             onClick={() => setSelected(i)}
             data-cursor="hover"
           >
-            {/* Skeleton shown until image loads */}
+            {/* Skeleton */}
             {!loaded[i] && (
-              <div className="w-full bg-white/5 animate-pulse" style={{ aspectRatio: "3/2" }} />
+              <div
+                className="w-full relative overflow-hidden"
+                style={{ aspectRatio: "3/2", background: "#0d0d0d" }}
+              >
+                <div
+                  className="absolute inset-0 -translate-x-full animate-[shimmer_1.4s_infinite]"
+                  style={{
+                    background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%)",
+                  }}
+                />
+              </div>
             )}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={src}
+              src={thumb(src)}
               alt={`${title} ${i + 1}`}
               className={`w-full block group-hover:scale-[1.04] transition-transform duration-700 ease-out ${
                 loaded[i] ? "opacity-100" : "opacity-0 absolute inset-0 h-full object-cover"

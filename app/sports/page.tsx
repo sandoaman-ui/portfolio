@@ -15,7 +15,7 @@ export default function SportsPage() {
           key={src}
           rel="preload"
           as="image"
-          href={src}
+          href={`/_next/image?url=${encodeURIComponent(src)}&w=1080&q=80`}
         />
       ))}
       <GalleryPageLayout
