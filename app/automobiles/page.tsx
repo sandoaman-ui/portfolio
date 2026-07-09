@@ -12,7 +12,7 @@ export default function AutomobilesPage() {
     <>
       {automobiles.slice(0, 4).map((src) => (
         <link key={src} rel="preload" as="image"
-          href={`/_next/image?url=${encodeURIComponent(src)}&w=828&q=75`} />
+          href={`https://wsrv.nl/?url=${encodeURIComponent(src)}&w=828&output=webp&q=75`} />
       ))}
       <GalleryPageLayout title="Automobiles" description="Where Machines Find Poetry" images={automobiles} />
     </>
