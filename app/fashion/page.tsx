@@ -12,7 +12,7 @@ export default function FashionPage() {
     <>
       {fashion.slice(0, 4).map((src) => (
         <link key={src} rel="preload" as="image"
-          href={`https://wsrv.nl/?url=${encodeURIComponent(src)}&w=828&output=webp&q=75`} />
+          href={`/thumbs/${src.match(/\/([0-9a-f-]{36})_rw/)?.[1]}.webp`} />
       ))}
       <GalleryPageLayout title="Fashion" description="Where Style Finds Structure" images={fashion} />
     </>
