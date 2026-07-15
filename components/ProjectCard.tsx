@@ -1,8 +1,11 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+
+function thumb(src: string, w: number) {
+  return `https://wsrv.nl/?url=${encodeURIComponent(src)}&w=${w}&output=webp&q=75`;
+}
 
 interface ProjectCardProps {
   title: string;
@@ -72,14 +75,22 @@ export default function ProjectCard({
         className="absolute inset-0"
         whileHover={{ scale: 1.06 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        style={{
+          backgroundImage: `url(${thumb(imageSrc, 32)}&blur=2)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       >
-        <Image
-          src={imageSrc}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={thumb(imageSrc, 960)}
+          srcSet={`${thumb(imageSrc, 640)} 640w, ${thumb(imageSrc, 960)} 960w, ${thumb(imageSrc, 1280)} 1280w`}
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 592px"
           alt={title}
-          fill
-          sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover"
-          priority={index < 4}
+          loading={index < 4 ? "eager" : "lazy"}
+          fetchPriority={index < 2 ? "high" : undefined}
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
         />
       </motion.div>
 
