@@ -3,8 +3,10 @@
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
-function thumb(src: string, w: number) {
-  return `https://wsrv.nl/?url=${encodeURIComponent(src)}&w=${w}&output=webp&q=75`;
+// Static thumbnails generated from the CDN originals (see public/cards/)
+function thumb(src: string, w: number | "blur") {
+  const id = src.match(/\/([0-9a-f-]{36})_rw/)?.[1];
+  return `/cards/${id}-${w}.webp`;
 }
 
 interface ProjectCardProps {
@@ -76,7 +78,7 @@ export default function ProjectCard({
         whileHover={{ scale: 1.06 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         style={{
-          backgroundImage: `url(${thumb(imageSrc, 32)}&blur=2)`,
+          backgroundImage: `url(${thumb(imageSrc, "blur")})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

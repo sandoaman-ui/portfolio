@@ -8,15 +8,17 @@ interface Props {
   title: string;
 }
 
+// Static thumbnails generated from the CDN originals (see public/thumbs/)
 function thumb(src: string) {
-  return `https://wsrv.nl/?url=${encodeURIComponent(src)}&w=828&output=webp&q=75`;
+  const id = src.match(/\/([0-9a-f-]{36})_rw/)?.[1];
+  return `/thumbs/${id}.webp`;
 }
 
 export default function PhotoGallery({ images, title }: Props) {
   const [selected, setSelected] = useState<number | null>(null);
   const [loaded, setLoaded] = useState<Record<number, boolean>>({});
 
-  // Stagger-warm all images through /_next/image so Vercel caches them
+  // Stagger-warm all thumbnails into the browser cache so they're ready
   // before the user scrolls to them. Starts 1.5s after page load.
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
